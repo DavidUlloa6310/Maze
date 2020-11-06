@@ -24,7 +24,25 @@ public class Main extends Application {
 
 
     public ArrayList<Maze> mazes = new ArrayList<Maze>();
-    boolean[][] maze = new boolean[width * tileSize][height * tileSize];
+    //boolean[][] maze = new boolean[width * tileSize][height * tileSize];
+    boolean[][] maze = {
+            {false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+    };
 
 
     @Override
@@ -42,19 +60,19 @@ public class Main extends Application {
        scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
 
            if (key.getCode() == KeyCode.W) {
-               character.moveUp();
+               character.moveUp(maze);
            }
 
            if (key.getCode() == KeyCode.A) {
-               character.moveLeft();
+               character.moveLeft(maze);
            }
 
            if (key.getCode() == KeyCode.S) {
-               character.moveDown();
+               character.moveDown(maze);
            }
 
            if (key.getCode() == KeyCode.D) {
-               character.moveRight();
+               character.moveRight(maze);
            }
 
        });
