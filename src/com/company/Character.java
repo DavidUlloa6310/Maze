@@ -30,7 +30,7 @@ public class Character {
     public void generateModel(Pane pane, int x, int y) {
         this.x = x;
         this.y = y;
-        rectangle.relocate(x, y);
+        rectangle.relocate(x * tileSize, y * tileSize);
         pane.getChildren().add(rectangle);
     }
 
@@ -66,6 +66,10 @@ public class Character {
         rectangle.relocate(respawnX * tileSize, respawnY * tileSize);
         this.x = respawnX;
         this.y = respawnY;
+    }
+
+    public void removeModel(Pane root) {
+        root.getChildren().remove(rectangle);
     }
 
 }

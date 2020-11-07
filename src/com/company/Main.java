@@ -1,5 +1,7 @@
 package com.company;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -19,12 +21,15 @@ public class Main extends Application {
     public static final int width = 24;
     public static final int height = 16;
     public static final int tileSize = 25;
+    public static final double speed = 1.5;
 
     Random random;
+    AnimationTimer animationTimer;
 
     Canvas canvas;
     GraphicsContext g;
     PlayerModel player;
+    Minotaur minotaur;
 
     ArrayList<Maze> mazes = new ArrayList<Maze>();
     /* Teleporters?, Add sword, Add minotaur */
@@ -97,15 +102,50 @@ public class Main extends Application {
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root);
 
-        player = new PlayerModel(Color.BLUE);
-        player.generateModel(root, 0,0);
-
         mazes.add(new Maze(mazeOne, new Point(0,0), new Point(23,0), new Point(10,10), new Point(10,10)));
         mazes.add(new Maze(mazeTwo, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
         mazes.add(new Maze(mazeThree, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
+
+        player = new PlayerModel(Color.BLUE);
+        player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
+
+        minotaur = new Minotaur(Color.RED);
+        minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
+
+        animationTimer = new AnimationTimer() {
+            long lastTick = 0;
+
+            @Override
+            public void handle(long now) {
+                if (lastTick == 0) {
+                    lastTick = now;
+                    minotaur.move(player, maze[0]);
+                    return;
+                }
+
+                if (now - lastTick > 500000000 / speed) {
+                    lastTick = now;
+                    minotaur.move(player, maze[0]);
+
+                    if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
+                        if (player.hasSword()) {
+                            minotaur.removeModel(root);
+                            player.removeSword();
+                            stop();
+                        } else {
+                            stage.close();
+                        }
+                    }
+
+                }
+
+            }
+        };
+
+        animationTimer.start();
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
 
@@ -139,6 +179,9 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
+                    minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
+                    animationTimer.start();
+
                     System.out.println("you did it");
                 }
             }
@@ -150,6 +193,10 @@ public class Main extends Application {
         stage.setTitle("Maze");
         stage.show();
 
+    }
+
+    public void tick(Character character, Maze[] maze) {
+        minotaur.move(character, maze[0]);
     }
 
     //MIGHT NEED TO ADD FUNCTION FOR STARTING MAZE, PARAMS FOR PLAYER AND MAZE

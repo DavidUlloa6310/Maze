@@ -31,6 +31,9 @@ public class Maze {
     public int getEndX() { return endX; }
     public int getEndY() { return endY; }
 
+    public int getMinotaurX() { return minotaurX; }
+    public int getMinotaurY() { return minotaurY; }
+
     public int getSwordX() { return swordX; }
     public int getSwordY() { return swordY; }
 
