@@ -1,7 +1,6 @@
 package com.company;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -13,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Application {
@@ -23,7 +21,6 @@ public class Main extends Application {
     public static final int tileSize = 25;
     public static final double speed = 1.5;
 
-    Random random;
     AnimationTimer animationTimer;
 
     Canvas canvas;
@@ -193,10 +190,6 @@ public class Main extends Application {
         stage.setTitle("Maze");
         stage.show();
 
-    }
-
-    public void tick(Character character, Maze[] maze) {
-        minotaur.move(character, maze[0]);
     }
 
     //MIGHT NEED TO ADD FUNCTION FOR STARTING MAZE, PARAMS FOR PLAYER AND MAZE
