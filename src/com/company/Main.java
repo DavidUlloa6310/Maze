@@ -109,7 +109,7 @@ public class Main extends Application {
         player = new PlayerModel(Color.BLUE);
         player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
 
-        minotaur = new Minotaur(Color.RED);
+        minotaur = new Minotaur();
         minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
 
         animationTimer = new AnimationTimer() {
@@ -176,7 +176,15 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
-                    minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
+
+                    if (minotaur.isDead()) {
+                        minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
+                    } else {
+                        //FIX ERROR WHEN KILLING MINOTAUR FIRST ROUND, THEN NOT KILLING SECOND ROUND
+                        minotaur.respawn(maze[0].getMinotaurX(), maze[0].getMinotaurY());
+                        minotaur.setAlive();
+                    }
+
                     animationTimer.start();
 
                     System.out.println("you did it");

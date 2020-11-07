@@ -91,7 +91,7 @@ public class Maze {
         groupRectangles.getChildren().remove(sword);
     }
 
-    public void addMinotaur(Minotaur minotaur) {
+    public void addMinotaur(Minotaur minotaur, Point point) {
 
     }
 }

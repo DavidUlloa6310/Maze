@@ -16,11 +16,17 @@ public class Character {
 
     private int x;
     private int y;
+    private boolean isDead = false;
 
     private Color color;
 
     public int getX() { return x; }
     public int getY() { return y; }
+    public boolean isDead() { return isDead; }
+
+    public void setAlive() {
+        this.isDead = false;
+    }
 
     public Character(Color color) {
         this.color = color;
@@ -70,6 +76,7 @@ public class Character {
 
     public void removeModel(Pane root) {
         root.getChildren().remove(rectangle);
+        isDead = true;
     }
 
 }
