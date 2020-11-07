@@ -7,6 +7,10 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.company.Main.tileSize;
+import static com.company.Main.width;
+import static com.company.Main.height;
+
 public class Character {
     private Rectangle rectangle;
 
@@ -20,8 +24,9 @@ public class Character {
 
     public Character(Color color) {
         this.color = color;
-        rectangle = new Rectangle(25, 25, color);
+        rectangle = new Rectangle(tileSize, tileSize, color);
     }
+
     public void generateModel(Pane pane, int x, int y) {
         this.x = x;
         this.y = y;
@@ -30,31 +35,37 @@ public class Character {
     }
 
     public void moveRight(Maze maze) {
-        if (this.x != 23 && !maze.getMaze()[this.y][this.x + 1]) {
+        if (this.x != width - 1 && !maze.getMaze()[this.y][this.x + 1]) {
             this.x++;
-            rectangle.relocate(x * 25, y * 25);
+            rectangle.relocate(x * tileSize, y * tileSize);
         }
     }
 
     public void moveDown(Maze maze) {
-        if (this.y != 15 && !maze.getMaze()[this.y + 1][this.x]) {
+        if (this.y != height - 1 && !maze.getMaze()[this.y + 1][this.x]) {
             this.y++;
-            rectangle.relocate(x * 25, y * 25);
+            rectangle.relocate(x * tileSize, y * tileSize);
         }
     }
 
     public void moveLeft(Maze maze) {
         if (this.x != 0 && !maze.getMaze()[this.y][this.x - 1]) {
             this.x--;
-            rectangle.relocate(x * 25, y * 25);
+            rectangle.relocate(x * tileSize, y * tileSize);
         }
     }
 
     public void moveUp(Maze maze) {
         if (this.y != 0 && !maze.getMaze()[this.y - 1][this.x]) {
             this.y--;
-            rectangle.relocate(x * 25, y * 25);
+            rectangle.relocate(x * tileSize, y * tileSize);
         }
+    }
+
+    public void respawn(int respawnX, int respawnY) {
+        rectangle.relocate(respawnX * tileSize, respawnY * tileSize);
+        this.x = respawnX;
+        this.y = respawnY;
     }
 
 }
