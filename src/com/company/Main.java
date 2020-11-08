@@ -123,13 +123,12 @@ public class Main extends Application {
                     return;
                 }
 
-                if (now - lastTick > 500000000 / speed) {
+                if (now - lastTick > 500000000 / (level.intValue() + 1)) {
                     lastTick = now;
                     minotaur.move(player, maze[0]);
 
                     if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
                         if (player.hasSword()) {
-                            minotaur.removeModel(root);
                             player.removeSword();
                             stop();
                         } else {
@@ -176,14 +175,7 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
-
-                    if (minotaur.isDead()) {
-                        minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
-                    } else {
-                        //FIX ERROR WHEN KILLING MINOTAUR FIRST ROUND, THEN NOT KILLING SECOND ROUND
-                        minotaur.respawn(maze[0].getMinotaurX(), maze[0].getMinotaurY());
-                        minotaur.setAlive();
-                    }
+                    minotaur.respawn(maze[0].getMinotaurX(), maze[0].getMinotaurY());
 
                     animationTimer.start();
 
