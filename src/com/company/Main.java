@@ -19,7 +19,6 @@ public class Main extends Application {
     public static final int width = 24;
     public static final int height = 16;
     public static final int tileSize = 25;
-    public static final double speed = 1.5;
 
     AnimationTimer animationTimer;
 
@@ -28,8 +27,8 @@ public class Main extends Application {
     PlayerModel player;
     Minotaur minotaur;
 
-    ArrayList<Maze> mazes = new ArrayList<Maze>();
-    /* Teleporters?, Add sword, Add minotaur */
+    ArrayList<Maze> mazes = new ArrayList<>();
+    /* Tele-porter?, Add sword, Add minotaur */
 
     boolean[][] mazeOne = {
             {false, false, false, false, true , true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
@@ -89,7 +88,7 @@ public class Main extends Application {
     };
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         AtomicInteger level = new AtomicInteger();
 
         canvas = new Canvas(width * tileSize, height * tileSize);
