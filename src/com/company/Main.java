@@ -19,6 +19,7 @@ public class Main extends Application {
     public static final int width = 24;
     public static final int height = 16;
     public static final int tileSize = 25;
+    public AtomicInteger level;
 
     AnimationTimer animationTimer;
 
@@ -89,7 +90,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        AtomicInteger level = new AtomicInteger();
+        level = new AtomicInteger();
 
         canvas = new Canvas(width * tileSize, height * tileSize);
         g = canvas.getGraphicsContext2D();
