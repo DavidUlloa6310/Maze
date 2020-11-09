@@ -1,10 +1,11 @@
 package com.company;
 
 import javafx.scene.paint.Color;
+import static com.company.Main.minotaurTilePath;
 
 public class Minotaur extends Character {
     public Minotaur() {
-        super(Color.RED);
+        super(minotaurTilePath);
     }
 
     public void move(Character character, Maze maze) {
@@ -21,4 +22,9 @@ public class Minotaur extends Character {
         }
 
     }
+
+    public void die() {
+        this.getImage().toBack();
+    }
+
 }

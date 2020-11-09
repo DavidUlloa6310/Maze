@@ -19,6 +19,24 @@ public class Main extends Application {
     public static final int width = 24;
     public static final int height = 16;
     public static final int tileSize = 25;
+
+    public static final String barrierTilePath = "testBarrier.png";
+    public static final String minotaurTilePath = "minotaur.png";
+    public static final String playerTilePath = "player.png";
+    public static final String swordPath = "sword.png";
+
+    public static final String grassTilePath = "grassBlock.png";
+    public static final String woodTilePath = "woodPlank.png";
+
+    public static final String cobbleStonePath = "cobblestone.png";
+    public static final String stoneBlockPath = "stoneBlock.png";
+
+    public static final String netherrackBlockPath = "netherrack.png";
+    public static final String netherBrickPath = "netherBrick.png";
+
+    public static final String endstonePath = "endstone.png";
+    public static final String obsidianPath = "obsidian.png";
+
     public AtomicInteger level;
 
     AnimationTimer animationTimer;
@@ -29,7 +47,7 @@ public class Main extends Application {
     Minotaur minotaur;
 
     ArrayList<Maze> mazes = new ArrayList<>();
-    /* Tele-porter?, Add sword, Add minotaur */
+    /* Tele-porter?, Finish mazes, add sprites */
 
     boolean[][] mazeOne = {
             {false, false, false, false, true , true , false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false},
@@ -88,6 +106,25 @@ public class Main extends Application {
             {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
     };
 
+    boolean[][] mazeFour = {
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+    };
+
     @Override
     public void start(Stage stage) {
         level = new AtomicInteger();
@@ -99,14 +136,15 @@ public class Main extends Application {
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root);
 
-        mazes.add(new Maze(mazeOne, new Point(0,0), new Point(23,0), new Point(10,10), new Point(10,10)));
-        mazes.add(new Maze(mazeTwo, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
-        mazes.add(new Maze(mazeThree, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
+        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(10,10)));
+        mazes.add(new Maze(mazeTwo, cobbleStonePath, stoneBlockPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
+        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
 
-        player = new PlayerModel(Color.BLUE);
+        player = new PlayerModel(playerTilePath);
         player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
 
         minotaur = new Minotaur();
@@ -130,6 +168,7 @@ public class Main extends Application {
                     if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
                         if (player.hasSword()) {
                             player.removeSword();
+                            minotaur.die();
                             stop();
                         } else {
                             stage.close();

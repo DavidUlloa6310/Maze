@@ -1,10 +1,12 @@
 package com.company;
-import com.company.Main.*;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static com.company.Main.swordPath;
 import static com.company.Main.tileSize;
 
 public class Maze {
@@ -19,7 +21,10 @@ public class Maze {
 
     private int swordX;
     private int swordY;
-    private Rectangle sword;
+    private ImageView sword;
+
+    private String blockedTiles;
+    private String walkableTiles;
 
     private Group groupRectangles;
 
@@ -41,8 +46,10 @@ public class Maze {
         this.maze = maze;
     }
 
-    public Maze(boolean[][] maze, Point playerSpawn, Point end, Point minotaur, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, Point minotaur, Point sword) {
         this.maze = maze;
+        this.blockedTiles = blockedTiles;
+        this.walkableTiles = walkableTiles;
 
         this.playerSpawnX = playerSpawn.getX();
         this.playerSpawnY = playerSpawn.getY();
@@ -65,7 +72,16 @@ public class Maze {
             for (int c = 0; c < maze[0].length; c++) {
 
                 if (c == swordX && r == swordY) {
-                    sword = new Rectangle(tileSize, tileSize, Color.SILVER);
+
+                    Image image = new Image(walkableTiles);
+                    ImageView iv = new ImageView();
+                    iv.setImage(image);
+                    iv.relocate(c * tileSize, r * tileSize);
+                    groupRectangles.getChildren().add(iv);
+
+                    Image swordImg = new Image(swordPath);
+                    sword = new ImageView();
+                    sword.setImage(swordImg);
                     sword.relocate(c * tileSize, r * tileSize);
                     groupRectangles.getChildren().add(sword);
                 } else if (c == endX && r == endY) {
@@ -73,9 +89,17 @@ public class Maze {
                     endpoint.relocate(c * tileSize, r * tileSize);
                     groupRectangles.getChildren().add(endpoint);
                 } else if (maze[r][c]) {
-                    Rectangle rectangle = new Rectangle(tileSize, tileSize, Color.WHITE);
-                    rectangle.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(rectangle);
+                    Image image = new Image(blockedTiles);
+                    ImageView iv = new ImageView();
+                    iv.setImage(image);
+                    iv.relocate(c * tileSize, r * tileSize);
+                    groupRectangles.getChildren().add(iv);
+                } else if (!maze[r][c]) {
+                    Image image = new Image(walkableTiles);
+                    ImageView iv = new ImageView();
+                    iv.setImage(image);
+                    iv.relocate(c * tileSize, r * tileSize);
+                    groupRectangles.getChildren().add(iv);
                 }
             }
         }

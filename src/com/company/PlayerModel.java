@@ -6,8 +6,8 @@ public class PlayerModel extends Character {
 
     private boolean hasSword = false;
 
-    public PlayerModel(Color color) {
-        super(color);
+    public PlayerModel(String imagePath) {
+        super(imagePath);
     }
 
     public void addSword() {
