@@ -4,8 +4,13 @@ import javafx.scene.paint.Color;
 import static com.company.Main.minotaurTilePath;
 
 public class Minotaur extends Character {
+
     public Minotaur() {
         super(minotaurTilePath);
+    }
+
+    public Minotaur(String tilePath) {
+        super(tilePath);
     }
 
     public void move(Character character, Maze maze) {
@@ -25,6 +30,7 @@ public class Minotaur extends Character {
 
     public void die() {
         this.getImage().toBack();
+        this.setDead(true);
     }
 
 }

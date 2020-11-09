@@ -25,8 +25,8 @@ public class Character {
 
     public boolean isDead() { return isDead; }
 
-    public void setAlive() {
-        this.isDead = false;
+    public void setDead(boolean isDead) {
+        this.isDead = isDead;
     }
 
     public Character(String imagePath) {

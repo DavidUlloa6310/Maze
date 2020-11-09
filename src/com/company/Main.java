@@ -44,7 +44,6 @@ public class Main extends Application {
     Canvas canvas;
     GraphicsContext g;
     PlayerModel player;
-    Minotaur minotaur;
 
     ArrayList<Maze> mazes = new ArrayList<>();
     /* Tele-porter?, Finish mazes, add sprites */
@@ -136,10 +135,24 @@ public class Main extends Application {
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root);
 
-        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(10,10)));
-        mazes.add(new Maze(mazeTwo, cobbleStonePath, stoneBlockPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
-        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
-        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), new Point(10,10), new Point(15,10)));
+
+        ArrayList<Point> mapOneSpawns = new ArrayList<>();
+        ArrayList<Minotaur> mapOneMinotaurs = new ArrayList<>();
+
+        mapOneSpawns.add(new Point(10,10));
+        mapOneSpawns.add(new Point(10,11));
+
+        mapOneMinotaurs.add(new Minotaur());
+        mapOneMinotaurs.add(new Minotaur());
+
+        Minotaur minotaur2 = new Minotaur();
+        Minotaur minotaur3 = new Minotaur();
+        Minotaur minotaur4 = new Minotaur();
+
+        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), mapOneSpawns, mapOneMinotaurs, new Point(10,10)));
+        mazes.add(new Maze(mazeTwo, cobbleStonePath, stoneBlockPath, new Point(0,0), new Point(23,0), new Point(10,10), minotaur2, new Point(15,10)));
+        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), new Point(10,10), minotaur3, new Point(15,10)));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), new Point(10,10), minotaur4, new Point(15,10)));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
@@ -147,8 +160,7 @@ public class Main extends Application {
         player = new PlayerModel(playerTilePath);
         player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
 
-        minotaur = new Minotaur();
-        minotaur.generateModel(root, maze[0].getMinotaurX(), maze[0].getMinotaurY());
+        maze[0].bringMinotaursForward();
 
         animationTimer = new AnimationTimer() {
             long lastTick = 0;
@@ -156,23 +168,33 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 if (lastTick == 0) {
-                    lastTick = now;
-                    minotaur.move(player, maze[0]);
-                    return;
+                    for (Minotaur minotaur : maze[0].getMinotaurs()) {
+
+                        if (!minotaur.isDead()) {
+                            lastTick = now;
+                            minotaur.move(player, maze[0]);
+                            return;
+                        }
+                    }
                 }
 
                 if (now - lastTick > 500000000 / (level.intValue() + 1)) {
                     lastTick = now;
-                    minotaur.move(player, maze[0]);
+                    for (Minotaur minotaur : maze[0].getMinotaurs()) {
 
-                    if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
-                        if (player.hasSword()) {
-                            player.removeSword();
-                            minotaur.die();
-                            stop();
-                        } else {
-                            stage.close();
+                        if (!minotaur.isDead()) {
+                            minotaur.move(player, maze[0]);
+
+                            if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
+                                if (player.hasSword()) {
+                                    player.removeSword();
+                                    minotaur.die();
+                                } else {
+                                    stage.close();
+                                }
+                            }
                         }
+
                     }
 
                 }
@@ -214,7 +236,7 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
-                    minotaur.respawn(maze[0].getMinotaurX(), maze[0].getMinotaurY());
+                    maze[0].respawnMinotaurs(root);
 
                     animationTimer.start();
 

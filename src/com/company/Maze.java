@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 import static com.company.Main.swordPath;
 import static com.company.Main.tileSize;
 
@@ -16,8 +18,8 @@ public class Maze {
 
     private int endX, endY;
 
-    private int minotaurX;
-    private int minotaurY;
+    private ArrayList<Point> minotaurSpawns;
+    private ArrayList<Minotaur> minotaurs;
 
     private int swordX;
     private int swordY;
@@ -36,8 +38,7 @@ public class Maze {
     public int getEndX() { return endX; }
     public int getEndY() { return endY; }
 
-    public int getMinotaurX() { return minotaurX; }
-    public int getMinotaurY() { return minotaurY; }
+    public ArrayList<Minotaur> getMinotaurs() { return minotaurs; }
 
     public int getSwordX() { return swordX; }
     public int getSwordY() { return swordY; }
@@ -46,7 +47,7 @@ public class Maze {
         this.maze = maze;
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, Point minotaur, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, Point minotaurSpawn, Minotaur minotaur, Point sword) {
         this.maze = maze;
         this.blockedTiles = blockedTiles;
         this.walkableTiles = walkableTiles;
@@ -57,12 +58,34 @@ public class Maze {
         this.endX = end.getX();
         this.endY = end.getY();
 
-        this.minotaurX = minotaur.getX();
-        this.minotaurY = minotaur.getY();
+        minotaurSpawns = new ArrayList<Point>();
+        minotaurSpawns.add(minotaurSpawn);
+
+        minotaurs = new ArrayList<Minotaur>();
+        minotaurs.add(minotaur);
 
         this.swordX = sword.getX();
         this.swordY = sword.getX();
     }
+
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Point> minotaurSpawns, ArrayList<Minotaur> minotaurs, Point sword) {
+        this.maze = maze;
+        this.blockedTiles = blockedTiles;
+        this.walkableTiles = walkableTiles;
+
+        this.playerSpawnX = playerSpawn.getX();
+        this.playerSpawnY = playerSpawn.getY();
+
+        this.minotaurSpawns = minotaurSpawns;
+        this.minotaurs = minotaurs;
+
+        this.endX = end.getX();
+        this.endY = end.getY();
+
+        this.swordX = sword.getX();
+        this.swordY = sword.getX();
+    }
+
 
     public void generateMaze(Pane root) {
 
@@ -101,7 +124,16 @@ public class Maze {
                     iv.relocate(c * tileSize, r * tileSize);
                     groupRectangles.getChildren().add(iv);
                 }
+
+                for (int i = 0; i < minotaurSpawns.size(); i++) {
+                    if (minotaurSpawns.get(i).getX() == c && minotaurSpawns.get(i).getY() == r && !groupRectangles.getChildren().contains(minotaurs.get(i))) {
+                        minotaurs.get(i).generateModel(root, c, r);
+                    }
+                }
+
             }
+
+
         }
 
         root.getChildren().add(groupRectangles);
@@ -115,7 +147,18 @@ public class Maze {
         groupRectangles.getChildren().remove(sword);
     }
 
-    public void addMinotaur(Minotaur minotaur, Point point) {
-
+    public void respawnMinotaurs(Pane root) {
+        for (int i = 0; i < minotaurSpawns.size(); i++) {
+            Point p = minotaurSpawns.get(i);
+            Minotaur minotaur = minotaurs.get(i);
+            minotaur.respawn(p.getX(), p.getY());
+        }
     }
+
+    public void bringMinotaursForward() {
+        for (Minotaur m : minotaurs) {
+            m.getImage().toFront();
+        }
+    }
+
 }
