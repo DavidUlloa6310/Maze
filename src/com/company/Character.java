@@ -3,7 +3,6 @@ package com.company;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static com.company.Main.tileSize;
@@ -15,19 +14,12 @@ public class Character {
 
     private int x;
     private int y;
-    private boolean isDead = false;
-
-    private Color color;
+    private int steps;
 
     public int getX() { return x; }
     public int getY() { return y; }
+    public int getSteps() { return steps; }
     public ImageView getImage() { return image; }
-
-    public boolean isDead() { return isDead; }
-
-    public void setDead(boolean isDead) {
-        this.isDead = isDead;
-    }
 
     public Character(String imagePath) {
         Image temp = new Image(imagePath);
@@ -46,6 +38,7 @@ public class Character {
         if (this.x != width - 1 && !maze.getMaze()[this.y][this.x + 1]) {
             this.x++;
             image.relocate(x * tileSize, y * tileSize);
+            steps++;
         }
     }
 
@@ -53,6 +46,7 @@ public class Character {
         if (this.y != height - 1 && !maze.getMaze()[this.y + 1][this.x]) {
             this.y++;
             image.relocate(x * tileSize, y * tileSize);
+            steps++;
         }
     }
 
@@ -60,6 +54,7 @@ public class Character {
         if (this.x != 0 && !maze.getMaze()[this.y][this.x - 1]) {
             this.x--;
             image.relocate(x * tileSize, y * tileSize);
+            steps++;
         }
     }
 
@@ -67,6 +62,7 @@ public class Character {
         if (this.y != 0 && !maze.getMaze()[this.y - 1][this.x]) {
             this.y--;
             image.relocate(x * tileSize, y * tileSize);
+            steps++;
         }
     }
 
@@ -75,11 +71,6 @@ public class Character {
         image.toFront();
         this.x = respawnX;
         this.y = respawnY;
-    }
-
-    public void removeModel(Pane root) {
-        root.getChildren().remove(image);
-        isDead = true;
     }
 
 }

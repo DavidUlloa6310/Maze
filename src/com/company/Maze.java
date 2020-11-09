@@ -26,7 +26,7 @@ public class Maze {
     private String blockedTiles;
     private String walkableTiles;
 
-    private Group groupRectangles;
+    private Group groupTiles;
 
     public boolean[][] getMaze() { return maze; }
 
@@ -83,7 +83,7 @@ public class Maze {
 
     public void generateMaze(Pane root) {
 
-        groupRectangles = new Group();
+        groupTiles = new Group();
 
         for (int r = 0; r < maze.length; r++) {
             for (int c = 0; c < maze[0].length; c++) {
@@ -94,29 +94,29 @@ public class Maze {
                     ImageView iv = new ImageView();
                     iv.setImage(image);
                     iv.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(iv);
+                    groupTiles.getChildren().add(iv);
 
                     Image swordImg = new Image(swordPath);
                     sword = new ImageView();
                     sword.setImage(swordImg);
                     sword.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(sword);
+                    groupTiles.getChildren().add(sword);
                 } else if (c == endX && r == endY) {
                     Rectangle endpoint = new Rectangle(tileSize, tileSize, Color.GOLD);
                     endpoint.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(endpoint);
+                    groupTiles.getChildren().add(endpoint);
                 } else if (maze[r][c]) {
                     Image image = new Image(blockedTiles);
                     ImageView iv = new ImageView();
                     iv.setImage(image);
                     iv.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(iv);
+                    groupTiles.getChildren().add(iv);
                 } else if (!maze[r][c]) {
                     Image image = new Image(walkableTiles);
                     ImageView iv = new ImageView();
                     iv.setImage(image);
                     iv.relocate(c * tileSize, r * tileSize);
-                    groupRectangles.getChildren().add(iv);
+                    groupTiles.getChildren().add(iv);
                 }
 
                 for (Minotaur minotaur : minotaurs) {
@@ -130,15 +130,15 @@ public class Maze {
 
         }
 
-        root.getChildren().add(groupRectangles);
+        root.getChildren().add(groupTiles);
     }
 
     public void clearMaze() {
-        groupRectangles.getChildren().clear();
+        groupTiles.getChildren().clear();
     }
 
     public void clearSword() {
-        groupRectangles.getChildren().remove(sword);
+        groupTiles.getChildren().remove(sword);
     }
 
     public void respawnMinotaurs(Pane root) {

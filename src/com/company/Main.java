@@ -179,6 +179,12 @@ public class Main extends Application {
                         if (!minotaur.isDead()) {
                             lastTick = now;
                             minotaur.move(player, maze[0]);
+                            if (minotaur.checkDamage(stage, player)) {
+                                Media media = new Media(new File(deathSoundPath).toURI().toString());
+                                MediaPlayer deathPlayer = new MediaPlayer(media);
+                                deathPlayer.setAutoPlay(true);
+                            }
+                            updatePlayerUI(userInterface, player);
                             return;
                         }
                     }
@@ -190,27 +196,12 @@ public class Main extends Application {
 
                         if (!minotaur.isDead()) {
                             minotaur.move(player, maze[0]);
-
-                            if (minotaur.getX() == player.getX() && minotaur.getY() == player.getY()) {
-                                if (player.hasSword()) {
-                                    player.removeSword();
-                                    minotaur.die();
-                                    updatePlayerUI(userInterface, player);
-                                } else {
-
-                                    if (player.getHealth() > 1) {
-                                        Media media = new Media(new File(deathSoundPath).toURI().toString());
-                                        MediaPlayer deathPlayer = new MediaPlayer(media);
-                                        deathPlayer.setAutoPlay(true);
-
-                                        player.changeHealth(-1);
-                                        updatePlayerUI(userInterface, player);
-
-                                    } else {
-                                        stage.close();
-                                    }
-                                }
+                            if (minotaur.checkDamage(stage, player)) {
+                                Media media = new Media(new File(deathSoundPath).toURI().toString());
+                                MediaPlayer deathPlayer = new MediaPlayer(media);
+                                deathPlayer.setAutoPlay(true);
                             }
+                            updatePlayerUI(userInterface, player);
                         }
 
                     }
@@ -246,7 +237,7 @@ public class Main extends Application {
                 updatePlayerUI(userInterface, player);
             }
 
-            if (player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) {
+            if ((player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) || key.getCode() == KeyCode.F) {
                 if (level.intValue() != mazes.size() - 1) {
                     level.getAndIncrement();
 
@@ -303,7 +294,7 @@ public class Main extends Application {
         ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
 
         minotaurs.add(new Minotaur(new Point(10,10)));
-        minotaurs.add(new Minotaur(new Point(10,11)));
+        //minotaurs.add(new Minotaur(new Point(10,11)));
 
         return minotaurs;
     }
