@@ -17,8 +17,6 @@ public class Maze {
     private int playerSpawnX, playerSpawnY;
 
     private int endX, endY;
-
-    private ArrayList<Point> minotaurSpawns;
     private ArrayList<Minotaur> minotaurs;
 
     private int swordX;
@@ -47,7 +45,7 @@ public class Maze {
         this.maze = maze;
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, Point minotaurSpawn, Minotaur minotaur, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, Minotaur minotaur, Point sword) {
         this.maze = maze;
         this.blockedTiles = blockedTiles;
         this.walkableTiles = walkableTiles;
@@ -58,9 +56,6 @@ public class Maze {
         this.endX = end.getX();
         this.endY = end.getY();
 
-        minotaurSpawns = new ArrayList<Point>();
-        minotaurSpawns.add(minotaurSpawn);
-
         minotaurs = new ArrayList<Minotaur>();
         minotaurs.add(minotaur);
 
@@ -68,7 +63,7 @@ public class Maze {
         this.swordY = sword.getX();
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Point> minotaurSpawns, ArrayList<Minotaur> minotaurs, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Minotaur> minotaurs, Point sword) {
         this.maze = maze;
         this.blockedTiles = blockedTiles;
         this.walkableTiles = walkableTiles;
@@ -76,7 +71,6 @@ public class Maze {
         this.playerSpawnX = playerSpawn.getX();
         this.playerSpawnY = playerSpawn.getY();
 
-        this.minotaurSpawns = minotaurSpawns;
         this.minotaurs = minotaurs;
 
         this.endX = end.getX();
@@ -125,9 +119,9 @@ public class Maze {
                     groupRectangles.getChildren().add(iv);
                 }
 
-                for (int i = 0; i < minotaurSpawns.size(); i++) {
-                    if (minotaurSpawns.get(i).getX() == c && minotaurSpawns.get(i).getY() == r && !groupRectangles.getChildren().contains(minotaurs.get(i))) {
-                        minotaurs.get(i).generateModel(root, c, r);
+                for (Minotaur minotaur : minotaurs) {
+                    if (minotaur.getSpawnX() == c && minotaur.getSpawnY() == r) {
+                        minotaur.generateModel(root, c, r);
                     }
                 }
 
@@ -148,10 +142,8 @@ public class Maze {
     }
 
     public void respawnMinotaurs(Pane root) {
-        for (int i = 0; i < minotaurSpawns.size(); i++) {
-            Point p = minotaurSpawns.get(i);
-            Minotaur minotaur = minotaurs.get(i);
-            minotaur.respawn(p.getX(), p.getY());
+        for (Minotaur minotaur : minotaurs) {
+            minotaur.respawn(minotaur.getSpawnX(), minotaur.getSpawnY());
         }
     }
 

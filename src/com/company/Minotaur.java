@@ -5,12 +5,23 @@ import static com.company.Main.minotaurTilePath;
 
 public class Minotaur extends Character {
 
-    public Minotaur() {
+    private int spawnX;
+    private int spawnY;
+
+    public int getSpawnX() { return spawnX; }
+
+    public int getSpawnY() { return spawnY; }
+
+    public Minotaur(Point point) {
         super(minotaurTilePath);
+        this.spawnX = point.getX();
+        this.spawnY = point.getY();
     }
 
-    public Minotaur(String tilePath) {
+    public Minotaur(Point point, String tilePath) {
         super(tilePath);
+        this.spawnX = point.getX();
+        this.spawnY = point.getY();
     }
 
     public void move(Character character, Maze maze) {
