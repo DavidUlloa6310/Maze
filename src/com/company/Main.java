@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,22 +20,24 @@ public class Main extends Application {
     public static final int height = 16;
     public static final int tileSize = 25;
 
-    public static final String barrierTilePath = "testBarrier.png";
-    public static final String minotaurTilePath = "minotaur.png";
-    public static final String playerTilePath = "player.png";
-    public static final String swordPath = "sword.png";
+    public static final String barrierTilePath = "images/testBarrier.png";
+    public static final String minotaurTilePath = "images/minotaur.png";
+    public static final String playerTilePath = "images/player.png";
+    public static final String swordPath = "images/sword.png";
 
-    public static final String grassTilePath = "grassBlock.png";
-    public static final String woodTilePath = "woodPlank.png";
+    public static final String grassTilePath = "images/grassBlock.png";
+    public static final String woodTilePath = "images/woodPlank.png";
 
-    public static final String cobbleStonePath = "cobblestone.png";
-    public static final String stoneBlockPath = "stoneBlock.png";
+    public static final String cobbleStonePath = "images/cobblestone.png";
+    public static final String stoneBlockPath = "images/stoneBlock.png";
 
-    public static final String netherrackBlockPath = "netherrack.png";
-    public static final String netherBrickPath = "netherBrick.png";
+    public static final String netherrackBlockPath = "images/netherrack.png";
+    public static final String netherBrickPath = "images/netherBrick.png";
 
-    public static final String endstonePath = "endstone.png";
-    public static final String obsidianPath = "obsidian.png";
+    public static final String endstonePath = "images/endstone.png";
+    public static final String obsidianPath = "images/obsidian.png";
+
+    public static final String musicPath = "music.mp3";
 
     public AtomicInteger level;
 
@@ -125,7 +127,7 @@ public class Main extends Application {
     };
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws FileNotFoundException {
         level = new AtomicInteger();
 
         canvas = new Canvas(width * tileSize, height * tileSize);
