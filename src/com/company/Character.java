@@ -3,14 +3,13 @@ package com.company;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 import static com.company.Main.tileSize;
 import static com.company.Main.width;
 import static com.company.Main.height;
 
 public class Character {
-    private ImageView image;
+    private final ImageView image;
 
     private int x;
     private int y;
