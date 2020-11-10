@@ -195,7 +195,7 @@ public class Main extends Application {
                     }
                 }
 
-                if (now - lastTick > 500000000 / (level.intValue() + 1)) {
+                if (now - lastTick > 500000000 / (level.intValue() + .75)) {
                     lastTick = now;
                     for (Minotaur minotaur : maze[0].getMinotaurs()) {
 
