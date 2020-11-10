@@ -190,7 +190,7 @@ public class Main extends Application {
                                 deathPlayer.setAutoPlay(true);
                             }
                             updatePlayerUI(userInterface, player);
-                            return;
+                            //return; maybe don;t need?
                         }
                     }
                 }
@@ -242,7 +242,7 @@ public class Main extends Application {
                 updatePlayerUI(userInterface, player);
             }
 
-            if ((player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) || key.getCode() == KeyCode.F) {
+            if ((player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) || key.getCode() == KeyCode.L) {
                 if (level.intValue() != mazes.size() - 1) {
                     level.getAndIncrement();
 
@@ -254,6 +254,16 @@ public class Main extends Application {
                     maze[0].respawnMinotaurs(root);
 
                     animationTimer.start();
+                }
+            }
+
+            for (Minotaur minotaur : maze[0].getMinotaurs()) {
+
+                if (!minotaur.isDead() && minotaur.checkDamage(stage, player)) {
+                    Media media = new Media(new File(deathSoundPath).toURI().toString());
+                    MediaPlayer deathPlayer = new MediaPlayer(media);
+                    deathPlayer.setAutoPlay(true);
+                    updatePlayerUI(userInterface, player);
                 }
             }
 
