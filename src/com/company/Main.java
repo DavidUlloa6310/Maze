@@ -27,23 +27,33 @@ public class Main extends Application {
     public static final int height = 16;
     public static final int tileSize = 25;
 
-    public static final String barrierTilePath = "images/testBarrier.png";
-    public static final String minotaurTilePath = "images/minotaur.png";
-    public static final String playerTilePath = "images/player.png";
-    public static final String swordPath = "images/sword.png";
-    public static final String heartPath = "images/heart.png";
+    public static final String barrierTilePath = "images/blocks/testBarrier.png";
+    public static final String minotaurTilePath = "images/characters/minotaur.png";
+    public static final String playerTilePath = "images/characters/player.png";
+    public static final String swordPath = "images/items/sword.png";
+    public static final String heartPath = "images/items/heart.png";
 
-    public static final String grassTilePath = "images/grassBlock.png";
-    public static final String woodTilePath = "images/woodPlank.png";
+    public static final String grassTilePath = "images/blocks/grassBlock.png";
+    public static final String woodTilePath = "images/blocks/woodPlank.png";
 
-    public static final String cobbleStonePath = "images/cobblestone.png";
-    public static final String stoneBlockPath = "images/stoneBlock.png";
+    public static ArrayList<String> caveBlocks;
+    public static final String cobbleStonePath = "images/blocks/cobblestone.png";
+    public static final String stoneBrickPath = "images/blocks/stoneBrickBlock.png";
+    public static final String goldOrePath = "images/blocks/goldOreBlock.png";
+    public static final String ironOrePath = "images/blocks/ironOreBlock.png";
+    public static final String diamondOrePath = "images/blocks/diamondOreBlock.png";
+    public static final String stoneBlockPath = "images/blocks/stoneBlock.png";
+    public static final String lavaBlockPath = "images/blocks/lavaBlock.png";
+    public static final String redStoneBlockPath = "images/blocks/redstoneBlock.png";
+    public static final String lapisBlockPath = "images/blocks/lapisBlock.png";
+    public static final String bedrockBlockPath = "images/blocks/bedrockBlock.png";
+    public static final String mossyCobbleStonePath = "images/blocks/mossyCobbleStoneBlock.png";
 
-    public static final String netherrackBlockPath = "images/netherrack.png";
-    public static final String netherBrickPath = "images/netherBrick.png";
+    public static final String netherrackBlockPath = "images/blocks/netherrack.png";
+    public static final String netherBrickPath = "images/blocks/netherBrick.png";
 
-    public static final String endstonePath = "images/endstone.png";
-    public static final String obsidianPath = "images/obsidian.png";
+    public static final String endstonePath = "images/blocks/endstone.png";
+    public static final String obsidianPath = "images/blocks/obsidian.png";
 
     public static final String musicPath = "C:\\Users\\ulloa\\OneDrive\\Documents\\ImportantDocuments\\Code\\Java\\Maze\\src\\media\\music.mp3";
     public static final String deathSoundPath = "C:\\Users\\ulloa\\OneDrive\\Documents\\ImportantDocuments\\Code\\Java\\Maze\\src\\media\\deathSound.mp3";
@@ -149,15 +159,10 @@ public class Main extends Application {
 
         Group userInterface = new Group();
 
-        ArrayList<Minotaur> mapOneMinotaurs = generateMapOneMinotaurs();
-        ArrayList<Minotaur> mapTwoMinotaurs = generateMapTwoMinotaurs();
-        ArrayList<Minotaur> mapThreeMinotaurs = generateMapThreeMinotaurs();
-        ArrayList<Minotaur> mapFourMinotaurs = generateMapFourMinotaurs();
-
-        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), mapOneMinotaurs, new Point(10,10)));
-        mazes.add(new Maze(mazeTwo, cobbleStonePath, stoneBlockPath, new Point(0,0), new Point(23,0), mapTwoMinotaurs, new Point(15,10)));
-        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), mapThreeMinotaurs, new Point(15,10)));
-        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0),mapFourMinotaurs, new Point(15,10)));
+        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), new Point(10,10)));
+        mazes.add(new Maze(mazeOne, stoneBrickPath, generateCaveBlocks(), new Point(0,0), new Point(23,0), generateMapTwoMinotaurs(), new Point(15,10)));
+        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), generateMapThreeMinotaurs(), new Point(15,10)));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), new Point(15,10)));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
@@ -320,6 +325,25 @@ public class Main extends Application {
         return minotaurs;
     }
 
+    public ArrayList<String> generateCaveBlocks() {
+        ArrayList<String> caveBlocks = new ArrayList<>();
+
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(lavaBlockPath);
+        caveBlocks.add(diamondOrePath);
+        caveBlocks.add(ironOrePath);
+        caveBlocks.add(goldOrePath);
+
+
+        return caveBlocks;
+    }
 
     public static void main(String[] args) {
         launch(args);

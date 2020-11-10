@@ -1,8 +1,10 @@
 package com.company;
 
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import static com.company.Main.minotaurTilePath;
+import static com.company.Main.tileSize;
 
 public class Minotaur extends Character {
 
@@ -27,6 +29,13 @@ public class Minotaur extends Character {
         super(tilePath);
         this.spawnX = point.getX();
         this.spawnY = point.getY();
+    }
+
+    public void generateModel(Pane pane) {
+        this.setX(spawnX);
+        this.setY(spawnY);
+        this.getImage().relocate(spawnX * tileSize,spawnY* tileSize);
+        pane.getChildren().add(this.getImage());
     }
 
     public void move(Character character, Maze maze) {
