@@ -55,8 +55,8 @@ public class Main extends Application {
     public static final String endstonePath = "images/blocks/endstone.png";
     public static final String obsidianPath = "images/blocks/obsidian.png";
 
-    public static final String musicPath = "C:\\Users\\ulloa\\OneDrive\\Documents\\ImportantDocuments\\Code\\Java\\Maze\\src\\media\\music.mp3";
-    public static final String deathSoundPath = "C:\\Users\\ulloa\\OneDrive\\Documents\\ImportantDocuments\\Code\\Java\\Maze\\src\\media\\deathSound.mp3";
+    public static final String musicPath = "src/media/music.mp3";
+    public static final String deathSoundPath = "src/media/deathSound.mp3";
 
     public MediaPlayer mediaPlayer;
     public AtomicInteger level;
@@ -308,7 +308,7 @@ public class Main extends Application {
         ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
         minotaurs.add(new Minotaur(new Point(10,10), minotaurTilePath));
         minotaurs.add(new Minotaur(new Point(5,10), minotaurTilePath));
-        minotaurs.add(new Minotaur(new Point(20,10), minotaurTilePath));
+        //minotaurs.add(new Minotaur(new Point(20,10), minotaurTilePath));
         return minotaurs;
     }
 
