@@ -19,11 +19,10 @@ public class Maze {
     private int playerSpawnX, playerSpawnY;
 
     private int endX, endY;
-    private ArrayList<Minotaur> minotaurs;
+    private ArrayList<Mob> mobs;
 
-    private int swordX;
-    private int swordY;
-    private ImageView sword;
+    private ArrayList<Object> swords;
+    private ImageView swordView;
 
     private ArrayList<String> blockedTiles;
     private String walkableTiles;
@@ -38,16 +37,15 @@ public class Maze {
     public int getEndX() { return endX; }
     public int getEndY() { return endY; }
 
-    public ArrayList<Minotaur> getMinotaurs() { return minotaurs; }
+    public ArrayList<Mob> getMobs() { return mobs; }
 
-    public int getSwordX() { return swordX; }
-    public int getSwordY() { return swordY; }
+    public ArrayList<Object> getObjects() {return this.swords; }
 
     public void setMaze(boolean[][] maze) {
         this.maze = maze;
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Minotaur> minotaurs, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, Object sword) {
         this.maze = maze;
 
         this.blockedTiles = new ArrayList<>();
@@ -58,16 +56,16 @@ public class Maze {
         this.playerSpawnX = playerSpawn.getX();
         this.playerSpawnY = playerSpawn.getY();
 
-        this.minotaurs = minotaurs;
+        this.mobs = mobs;
 
         this.endX = end.getX();
         this.endY = end.getY();
 
-        this.swordX = sword.getX();
-        this.swordY = sword.getX();
+        swords = new ArrayList<Object>();
+        swords.add(sword);
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Minotaur> minotaurs, Point sword) {
+    public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
         this.maze = maze;
         this.blockedTiles = blockedTiles;
         this.walkableTiles = walkableTiles;
@@ -75,13 +73,12 @@ public class Maze {
         this.playerSpawnX = playerSpawn.getX();
         this.playerSpawnY = playerSpawn.getY();
 
-        this.minotaurs = minotaurs;
+        this.mobs = mobs;
 
         this.endX = end.getX();
         this.endY = end.getY();
 
-        this.swordX = sword.getX();
-        this.swordY = sword.getX();
+        this.swords = swords;
     }
 
 
@@ -115,18 +112,21 @@ public class Maze {
 
         }
 
-        Image swordImg = new Image(swordPath);
-        sword = new ImageView();
-        sword.setImage(swordImg);
-        sword.relocate(swordX* tileSize, swordY* tileSize);
-        groupTiles.getChildren().add(sword);
+        for (Object sword : swords) {
+            Image swordImg = new Image(swordPath);
+            swordView = new ImageView();
+            swordView.setImage(swordImg);
+            swordView.relocate(sword.getPoint().getX() * tileSize, sword.getPoint().getY() * tileSize);
+            sword.setImageView(swordView);
+            groupTiles.getChildren().add(swordView);
+        }
 
         Rectangle endpoint = new Rectangle(tileSize, tileSize, Color.GOLD);
         endpoint.relocate(endX* tileSize, endY * tileSize);
         groupTiles.getChildren().add(endpoint);
 
-        for (Minotaur minotaur : minotaurs) {
-            minotaur.generateModel(root);
+        for (Mob mob : mobs) {
+            mob.generateModel(root);
         }
 
         root.getChildren().add(groupTiles);
@@ -136,18 +136,19 @@ public class Maze {
         groupTiles.getChildren().clear();
     }
 
-    public void clearSword() {
-        groupTiles.getChildren().remove(sword);
+    public void clearSword(Object sword) {
+        groupTiles.getChildren().remove(sword.getImageView());
+        sword.setGone(true);
     }
 
-    public void respawnMinotaurs(Pane root) {
-        for (Minotaur minotaur : minotaurs) {
-            minotaur.respawn(minotaur.getSpawnX(), minotaur.getSpawnY());
+    public void respawnMobs(Pane root) {
+        for (Mob mob : mobs) {
+            mob.respawn(mob.getSpawnX(), mob.getSpawnY());
         }
     }
 
-    public void bringMinotaursForward() {
-        for (Minotaur m : minotaurs) {
+    public void bringMobsForward() {
+        for (Mob m : mobs) {
             m.getImage().toFront();
         }
     }

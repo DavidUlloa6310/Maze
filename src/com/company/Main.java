@@ -28,7 +28,12 @@ public class Main extends Application {
     public static final int tileSize = 25;
 
     public static final String barrierTilePath = "images/blocks/testBarrier.png";
-    public static final String minotaurTilePath = "images/characters/minotaur.png";
+    public static final String creeperTilePath = "images/characters/creeper.png";
+    public static final String blazeTilePath = "images/characters/blaze.png";
+    public static final String endermanTilePath = "images/characters/enderman.png";
+    public static final String skeletonTilePath = "images/characters/skeleton.png";
+    public static final String spiderTilePath = "images/characters/spider.png";
+
     public static final String playerTilePath = "images/characters/player.png";
     public static final String swordPath = "images/items/sword.png";
     public static final String heartPath = "images/items/heart.png";
@@ -58,7 +63,8 @@ public class Main extends Application {
     public static final String musicPath = "src/media/music.mp3";
     public static final String deathSoundPath = "src/media/deathSound.mp3";
 
-    public MediaPlayer mediaPlayer;
+    public MediaPlayer songMediaPlayer = new MediaPlayer(new Media(new File(musicPath).toURI().toString()));
+
     public AtomicInteger level;
 
     AnimationTimer animationTimer;
@@ -90,22 +96,22 @@ public class Main extends Application {
     };
 
     boolean[][] mazeTwo = {
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, true , false, false, true , false, true , true , true , false, false, false, false, false, false, false, false, false},
+            {false, true , false, false, false, false, false, true , false, false, true , false, false, false, true , false, false, true , false, false, false, false, true , false},
+            {false, true , false, true , true , true , false, true , false, false, true , false, true , false, true , false, false, true , false, true , true , true , true , false},
+            {false, false, false, true , false, false, false, true , false, false, false, false, true , false, true , false, false, true , false, true , false, false, false, false},
+            {false, true , true , true , true , false, false, true , false, true , true , true , true , false, false, false, false, false, false, true , false, true , false, true },
+            {false, false, false, false, true , true , false, true , true , false, false, false, true , true , true , false, false, true , false, true , false, true , false, true },
+            {false, true , true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, true , false, true , false, true , false, true },
+            {true , true , true , true , true , false, false, true , true , true , true , true , false, false, true , false, false, true , false, false, false, false, false, false},
+            {true , true , false, false, false, false, false, true , true , false, false, true , true , false, true , false, true , true , true , true , true , true , true , false},
+            {false, true , false, true , true , true , false, true , true , false, false, true , false, false, true , false, true , false, false, false, false, false, true , false},
+            {false, true , false, false, false, false, false, false, true , false, false, true , false, false, true , false, true , false, true , false, false, false, true , false},
+            {false, true , false, true , true , false, false, false, false, false, false, false, false, false, true , false, false, false, true , false, false, false, true , false},
+            {false, true , false, true , true , true , true , true , true , true , true , false, false, false, false, false, true , false, true , false, false, false, true , false},
+            {false, false, false, false, false, false, false, false, false, false, true , false, false, true , false, true , true , false, true , false, false, false, true , false},
+            {true , true , true , true , true , false, false, false, true , false, true , false, false, true , false, false, true , false, true , false, false, false, false, false},
+            {true , false, false, false, false, false, false, true , true , false, false, false, false, true , false, false, false, false, true , false, false, true , true , false},
     };
 
     boolean[][] mazeThree = {
@@ -159,10 +165,10 @@ public class Main extends Application {
 
         Group userInterface = new Group();
 
-        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), new Point(10,10)));
-        mazes.add(new Maze(mazeOne, stoneBrickPath, generateCaveBlocks(), new Point(0,0), new Point(23,0), generateMapTwoMinotaurs(), new Point(15,10)));
-        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), generateMapThreeMinotaurs(), new Point(15,10)));
-        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), new Point(15,10)));
+        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), new Object(new Point(10,10))));
+        mazes.add(new Maze(mazeTwo, stoneBrickPath, generateCaveBlocks(), new Point(0,0), new Point(21,13), generateMapTwoMinotaurs(), generateMapTwoSwords()));
+        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), generateMapThreeMinotaurs(), new Object(new Point(15,10))));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), new Object(new Point(15,10))));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
@@ -170,7 +176,7 @@ public class Main extends Application {
         player = new PlayerModel(playerTilePath);
         player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
 
-        maze[0].bringMinotaursForward();
+        maze[0].bringMobsForward();
         updatePlayerUI(userInterface, player);
 
         animationTimer = new AnimationTimer() {
@@ -179,12 +185,12 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 if (lastTick == 0) {
-                    for (Minotaur minotaur : maze[0].getMinotaurs()) {
+                    for (Mob mob : maze[0].getMobs()) {
 
-                        if (!minotaur.isDead()) {
+                        if (!mob.isDead()) {
                             lastTick = now;
-                            minotaur.move(player, maze[0]);
-                            if (minotaur.checkDamage(stage, player)) {
+                            mob.move(player, maze[0]);
+                            if (mob.checkDamage(stage, player)) {
                                 Media media = new Media(new File(deathSoundPath).toURI().toString());
                                 MediaPlayer deathPlayer = new MediaPlayer(media);
                                 deathPlayer.setAutoPlay(true);
@@ -197,11 +203,11 @@ public class Main extends Application {
 
                 if (now - lastTick > 500000000 / (level.intValue() + .75)) {
                     lastTick = now;
-                    for (Minotaur minotaur : maze[0].getMinotaurs()) {
+                    for (Mob mob : maze[0].getMobs()) {
 
-                        if (!minotaur.isDead()) {
-                            minotaur.move(player, maze[0]);
-                            if (minotaur.checkDamage(stage, player)) {
+                        if (!mob.isDead()) {
+                            mob.move(player, maze[0]);
+                            if (mob.checkDamage(stage, player)) {
                                 Media media = new Media(new File(deathSoundPath).toURI().toString());
                                 MediaPlayer deathPlayer = new MediaPlayer(media);
                                 deathPlayer.setAutoPlay(true);
@@ -236,12 +242,6 @@ public class Main extends Application {
                 player.moveRight(maze[0]);
             }
 
-            if (player.getX() == maze[0].getSwordX() && player.getY() == maze[0].getSwordY()) {
-                player.addSword();
-                maze[0].clearSword();
-                updatePlayerUI(userInterface, player);
-            }
-
             if ((player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) || key.getCode() == KeyCode.L) {
                 if (level.intValue() != mazes.size() - 1) {
                     level.getAndIncrement();
@@ -251,28 +251,34 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
-                    maze[0].respawnMinotaurs(root);
+                    maze[0].respawnMobs(root);
 
                     animationTimer.start();
                 }
             }
 
-            for (Minotaur minotaur : maze[0].getMinotaurs()) {
+            for (Mob mob : maze[0].getMobs()) {
 
-                if (!minotaur.isDead() && minotaur.checkDamage(stage, player)) {
+                if (!mob.isDead() && mob.checkDamage(stage, player)) {
                     Media media = new Media(new File(deathSoundPath).toURI().toString());
                     MediaPlayer deathPlayer = new MediaPlayer(media);
                     deathPlayer.setAutoPlay(true);
+                }
+                updatePlayerUI(userInterface, player);
+            }
+
+            for (Object sword : maze[0].getObjects()) {
+
+                if (player.getX() == sword.getPoint().getX() && player.getY() == sword.getPoint().getY() && !sword.isGone()) {
+                    player.addSword();
+                    maze[0].clearSword(sword);
                     updatePlayerUI(userInterface, player);
                 }
             }
 
         });
 
-        Media musicFile = new Media(new File(musicPath).toURI().toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        mediaPlayer.setVolume(.9);
-        mediaPlayer.setAutoPlay(true);
+        songMediaPlayer.setAutoPlay(true);
 
         root.getChildren().add(userInterface);
 
@@ -305,34 +311,43 @@ public class Main extends Application {
 
     }
 
-    public ArrayList<Minotaur> generateMapOneMinotaurs() {
-        ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
+    public ArrayList<Mob> generateMapOneMinotaurs() {
+        ArrayList<Mob> mobs = new ArrayList<Mob>();
 
-        minotaurs.add(new Minotaur(new Point(10,10)));
+        mobs.add(new Mob(new Point(10,10)));
         //minotaurs.add(new Minotaur(new Point(10,11)));
 
-        return minotaurs;
+        return mobs;
     }
 
-    public ArrayList<Minotaur> generateMapTwoMinotaurs() {
-        ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
-        minotaurs.add(new Minotaur(new Point(10,10), minotaurTilePath));
-        minotaurs.add(new Minotaur(new Point(5,10), minotaurTilePath));
-        //minotaurs.add(new Minotaur(new Point(20,10), minotaurTilePath));
-        return minotaurs;
+    public ArrayList<Mob> generateMapTwoMinotaurs() {
+        ArrayList<Mob> mobs = new ArrayList<Mob>();
+        mobs.add(new Mob(new Point(10,10), spiderTilePath));
+        mobs.add(new Mob(new Point(5,10), spiderTilePath));
+        mobs.add(new Mob(new Point(20,10), spiderTilePath));
+        return mobs;
     }
 
-    public ArrayList<Minotaur> generateMapThreeMinotaurs() {
-        ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
-        minotaurs.add(new Minotaur(new Point(10,10), minotaurTilePath));
-        minotaurs.add(new Minotaur(new Point(5,10), minotaurTilePath));
-        minotaurs.add(new Minotaur(new Point(20,10), minotaurTilePath));
-        return minotaurs;
+    public ArrayList<Object> generateMapTwoSwords() {
+        ArrayList<Object> swords = new ArrayList<Object>();
+        swords.add(new Object(new Point(17, 10)));
+        swords.add(new Object(new Point(5, 10)));
+        swords.add(new Object(new Point(8, 13)));
+        return swords;
     }
 
-    public ArrayList<Minotaur> generateMapFourMinotaurs() {
-        ArrayList<Minotaur> minotaurs = new ArrayList<Minotaur>();
-        return minotaurs;
+    public ArrayList<Mob> generateMapThreeMinotaurs() {
+        ArrayList<Mob> mobs = new ArrayList<Mob>();
+        mobs.add(new Mob(new Point(10,10), blazeTilePath));
+        mobs.add(new Mob(new Point(5,10), blazeTilePath));
+        mobs.add(new Mob(new Point(20,10), blazeTilePath));
+        return mobs;
+    }
+
+    public ArrayList<Mob> generateMapFourMinotaurs() {
+        ArrayList<Mob> mobs = new ArrayList<Mob>();
+        mobs.add(new Mob(new Point(10,10), endermanTilePath));
+        return mobs;
     }
 
     public ArrayList<String> generateCaveBlocks() {

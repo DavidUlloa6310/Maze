@@ -3,10 +3,10 @@ package com.company;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import static com.company.Main.minotaurTilePath;
+import static com.company.Main.creeperTilePath;
 import static com.company.Main.tileSize;
 
-public class Minotaur extends Character {
+public class Mob extends Character {
 
     private final int spawnX;
     private final int spawnY;
@@ -19,13 +19,13 @@ public class Minotaur extends Character {
 
     public int getSpawnY() { return spawnY; }
 
-    public Minotaur(Point point) {
-        super(minotaurTilePath);
+    public Mob(Point point) {
+        super(creeperTilePath);
         this.spawnX = point.getX();
         this.spawnY = point.getY();
     }
 
-    public Minotaur(Point point, String tilePath) {
+    public Mob(Point point, String tilePath) {
         super(tilePath);
         this.spawnX = point.getX();
         this.spawnY = point.getY();
