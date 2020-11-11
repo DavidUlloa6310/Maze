@@ -1,12 +1,8 @@
 package com.company;
 
-import javafx.scene.image.Image;
-import static com.company.Main.teleporterBlockPath;
-
 public class Teleporter {
-    private Point startPoint;
-    private Image image;
-    private Point teleportPoint;
+    private final Point startPoint;
+    private final Point teleportPoint;
 
     public Point getStartPoint() {
         return startPoint;
@@ -18,7 +14,6 @@ public class Teleporter {
 
     public Teleporter(Point startPoint, Point teleportPoint) {
         this.startPoint = startPoint;
-        this.image = new Image(teleporterBlockPath);
         this.teleportPoint = teleportPoint;
     }
 
