@@ -60,6 +60,7 @@ public class Main extends Application {
 
     public static final String endstonePath = "images/blocks/endstone.png";
     public static final String obsidianPath = "images/blocks/obsidian.png";
+    public static final String teleporterBlockPath = "images/blocks/portalBlock.png";
 
     public static final String musicPath = "src/media/music.mp3";
     public static final String deathSoundPath = "src/media/deathSound.mp3";
@@ -171,7 +172,7 @@ public class Main extends Application {
         mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), generateMapOneSwords()));
         mazes.add(new Maze(mazeTwo, stoneBrickPath, generateCaveBlocks(), new Point(0,0), new Point(21,13), generateMapTwoMinotaurs(), generateMapTwoSwords()));
         mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(11,7), new Point(22,0), generateMapThreeMinotaurs(), generateMapThreeSwords()));
-        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), generateMapFourSwords()));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(21,3), generateMapFourMinotaurs(), generateMapFourSwords(), generateMapFourTeleporters()));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
@@ -267,7 +268,7 @@ public class Main extends Application {
                     animationTimer.start();
                 } else {
                     stage.close();
-                    //END THE GAME
+                    //END GAME
                 }
             }
 
@@ -287,6 +288,13 @@ public class Main extends Application {
                     player.addSword();
                     maze[0].clearSword(sword);
                     updatePlayerUI(userInterface, player);
+                }
+            }
+
+            for (Teleporter teleporter : maze[0].getTeleporters()) {
+                if (player.getX() == teleporter.getStartPoint().getX() && player.getY() == teleporter.getStartPoint().getY()) {
+                    player.respawn(teleporter.getTeleportPoint().getX(), teleporter.getTeleportPoint().getY());
+                    break;
                 }
             }
 
@@ -374,12 +382,26 @@ public class Main extends Application {
 
     public ArrayList<Mob> generateMapFourMinotaurs() {
         ArrayList<Mob> mobs = new ArrayList<Mob>();
-//        mobs.add(new Mob(new Point(10,10), endermanTilePath));
+        mobs.add(new Mob(new Point(6,3), endermanTilePath));
+        mobs.add(new Mob(new Point(13,2), endermanTilePath));
+        mobs.add(new Mob(new Point(17,14), endermanTilePath));
         return mobs;
     }
     public ArrayList<Object> generateMapFourSwords() {
         ArrayList<Object> swords = new ArrayList<Object>();
+        swords.add(new Object(new Point(0,7)));
+        swords.add(new Object(new Point(1,10)));
+        swords.add(new Object(new Point(16,1)));
         return swords;
+    }
+    public ArrayList<Teleporter> generateMapFourTeleporters() {
+        ArrayList<Teleporter> teleporters = new ArrayList<Teleporter>();
+        teleporters.add(new Teleporter(new Point(2,12), new Point(15,0)));
+        teleporters.add(new Teleporter(new Point(15,0), new Point(19,15)));
+        teleporters.add(new Teleporter(new Point(19,15), new Point(19, 5)));
+        teleporters.add(new Teleporter(new Point(19,5), new Point(23,10)));
+        teleporters.add(new Teleporter(new Point (11, 7), new Point(19,15)));
+        return teleporters;
     }
 
     public ArrayList<String> generateCaveBlocks() {

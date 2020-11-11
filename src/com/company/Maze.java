@@ -11,6 +11,7 @@ import java.util.Random;
 
 import static com.company.Main.swordPath;
 import static com.company.Main.tileSize;
+import static com.company.Main.teleporterBlockPath;
 
 public class Maze {
     private boolean[][] maze;
@@ -27,6 +28,8 @@ public class Maze {
     private ArrayList<String> blockedTiles;
     private String walkableTiles;
 
+    private ArrayList<Teleporter> teleporters;
+
     private Group groupTiles;
 
     public boolean[][] getMaze() { return maze; }
@@ -38,29 +41,11 @@ public class Maze {
     public int getEndY() { return endY; }
 
     public ArrayList<Mob> getMobs() { return mobs; }
-
-    public ArrayList<Object> getObjects() {return this.swords; }
+    public ArrayList<Object> getObjects() { return this.swords; }
+    public ArrayList<Teleporter> getTeleporters() { return this.teleporters; }
 
     public void setMaze(boolean[][] maze) {
         this.maze = maze;
-    }
-
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
-        this.maze = maze;
-
-        this.blockedTiles = new ArrayList<String>();
-        this.blockedTiles.add(blockedTiles);
-        this.walkableTiles = walkableTiles;
-
-        this.playerSpawnX = playerSpawn.getX();
-        this.playerSpawnY = playerSpawn.getY();
-
-        this.mobs = mobs;
-
-        this.endX = end.getX();
-        this.endY = end.getY();
-
-        this.swords = swords;
     }
 
     public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
@@ -77,8 +62,29 @@ public class Maze {
         this.endY = end.getY();
 
         this.swords = swords;
+        this.teleporters = new ArrayList<>();
     }
 
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTile, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
+        this(maze, walkableTiles, blockedTileToArrayList(blockedTile), playerSpawn, end, mobs, swords);
+        this.teleporters = new ArrayList<>();
+    }
+
+    public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords, ArrayList<Teleporter> teleporters) {
+        this(maze, walkableTiles, blockedTiles, playerSpawn, end, mobs, swords);
+        this.teleporters = teleporters;
+    }
+
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTile, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords, ArrayList<Teleporter> teleporters) {
+        this(maze, walkableTiles, blockedTileToArrayList(blockedTile), playerSpawn, end, mobs, swords);
+        this.teleporters = teleporters;
+    }
+
+    public static ArrayList<String> blockedTileToArrayList(String blockedTile) {
+        ArrayList<String> blockedTiles = new ArrayList<String>();
+        blockedTiles.add(blockedTile);
+        return blockedTiles;
+    }
 
     public void generateMaze(Pane root) {
 
@@ -117,6 +123,15 @@ public class Maze {
             swordView.relocate(sword.getPoint().getX() * tileSize, sword.getPoint().getY() * tileSize);
             sword.setImageView(swordView);
             groupTiles.getChildren().add(swordView);
+        }
+
+        for (Teleporter teleporter : teleporters) {
+            Image teleporterImage = new Image(teleporterBlockPath);
+            ImageView imageView = new ImageView();
+            imageView.setImage(teleporterImage);
+            imageView.relocate(teleporter.getStartPoint().getX() * tileSize, teleporter.getStartPoint().getY() * tileSize);
+            imageView.toFront();
+            groupTiles.getChildren().add(imageView);
         }
 
         Rectangle endpoint = new Rectangle(tileSize, tileSize, Color.GOLD);
