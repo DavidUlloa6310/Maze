@@ -45,12 +45,11 @@ public class Maze {
         this.maze = maze;
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, Object sword) {
+    public Maze(boolean[][] maze, String walkableTiles, String blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
         this.maze = maze;
 
-        this.blockedTiles = new ArrayList<>();
+        this.blockedTiles = new ArrayList<String>();
         this.blockedTiles.add(blockedTiles);
-
         this.walkableTiles = walkableTiles;
 
         this.playerSpawnX = playerSpawn.getX();
@@ -61,8 +60,7 @@ public class Maze {
         this.endX = end.getX();
         this.endY = end.getY();
 
-        swords = new ArrayList<Object>();
-        swords.add(sword);
+        this.swords = swords;
     }
 
     public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {

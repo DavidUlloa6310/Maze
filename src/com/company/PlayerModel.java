@@ -1,6 +1,7 @@
 package com.company;
 
 import javafx.scene.paint.Color;
+import static com.company.Main.playerTilePath;
 
 public class PlayerModel extends Character {
 
@@ -9,8 +10,8 @@ public class PlayerModel extends Character {
 
     public int getHealth() { return health; }
 
-    public PlayerModel(String imagePath) {
-        super(imagePath);
+    public PlayerModel() {
+        super(playerTilePath);
         health = 3;
     }
 

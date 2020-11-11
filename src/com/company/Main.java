@@ -33,6 +33,7 @@ public class Main extends Application {
     public static final String endermanTilePath = "images/characters/enderman.png";
     public static final String skeletonTilePath = "images/characters/skeleton.png";
     public static final String spiderTilePath = "images/characters/spider.png";
+    public static final String ricoTilePath = "images/characters/rico.png";
 
     public static final String playerTilePath = "images/characters/player.png";
     public static final String swordPath = "images/items/sword.png";
@@ -74,6 +75,8 @@ public class Main extends Application {
     PlayerModel player;
 
     ArrayList<Maze> mazes = new ArrayList<>();
+
+    ArrayList<String> playerInputs = new ArrayList<>();
     /* Tele-porter?, Finish mazes, add sprites */
 
     boolean[][] mazeOne = {
@@ -115,41 +118,41 @@ public class Main extends Application {
     };
 
     boolean[][] mazeThree = {
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false, true },
+            {false, true , false, false, true , false, true , false, false, true , false, true , false, true , true , true , true , true , false, false, false, false, false, false},
+            {false, true , false, true , true , false, true , false, false, true , false, false, false, false, false, false, false, true , false, true , true , false, true , false},
+            {false, false, false, false, true , false, true , false, false, true , false, false, false, true , true , false, false, true , false, true , false, false, true , false},
+            {false, true , true , false, true , false, true , false, false, true , false, false, false, false, true , false, false, true , false, true , false, false, true , false},
+            {false, false, true , false, true , false, true , false, false, true , false, false, false, false, true , false, false, true , false, true , false, false, true , false},
             {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {true , true , true , false, true , true , false, false, false, false, false, false, false, false, false, false, false, false, false, true , true , true , true , false},
+            {false, false, false, false, false, false, false, false, false, true , false, false, false, false, true , false, false, true , false, false, false, false, false, false},
+            {false, false, true , false, true , false, true , false, false, true , false, false, false, false, true , false, false, true , false, true , true , true , true , false},
+            {false, false, true , false, true , false, true , false, false, true , true , false, false, true , true , false, false, true , false, false, false, false, false, false},
+            {false, false, true , false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true , false},
+            {false, false, false, false, true , false, true , false, true , true , false, false, false, true , true , true , true , true , true , true , true , true , true , false},
+            {false, false, true , false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, false, true , true , true , true , true , true , true , true , true , true , false, true , true , true , true , true , true , true , true , true , true , true },
     };
 
     boolean[][] mazeFour = {
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, true , false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+            {false, true , false, true , false, false, false, true , false, false, false, false, false, false, true , false, true , true , true , false, false, false, false, false},
+            {false, true , false, true , false, true , false, true , false, true , true , true , true , true , true , false, false, false, false, false, true , true , true , true },
+            {false, true , false, true , false, true , false, true , false, true , false, false, false, false, true , true , true , true , true , false, true , false, false, false},
+            {false, true , false, true , true , true , false, true , false, true , false, true , false, false, false, false, false, false, false, false, true , false, false, false},
+            {false, false, false, true , false, true , false, true , false, true , false, true , true , true , true , true , true , true , true , true , true , true , true , false},
+            {false, true , false, false, false, true , false, false, false, true , false, false, false, false, false, false, false, false, true , false, true , false, true , false},
+            {false, true , true , true , false, true , false, true , true , true , false, true , true , false, true , false, true , true , true , false, true , false, true , false},
+            {false, true , false, false, false, true , false, false, false, false, false, false, true , false, true , false, true , false, false, false, true , false, false, false},
+            {false, false, false, true , true , true , false, true , true , true , true , false, true , false, true , false, true , false, true , true , true , false, true , false},
+            {true , true , false, true , false, false, false, false, false, false, true , false, true , false, true , false, true , false, true , false, false, false, true , false},
+            {false, false, false, true , false, true , true , true , true , false, true , false, true , true , true , false, true , false, true , false, true , false, true , false},
+            {false, true , true , true , false, true , false, false, false, false, false, false, true , false, true , false, true , false, true , true , true , false, true , true },
+            {false, true , false, true , false, true , false, true , false, true , true , true , true , false, true , false, true , false, true , false, true , true , true , false},
+            {false, true , false, false, false, true , false, true , false, false, false, false, false, false, false, false, true , false, false, false, false, false, false, false},
+            {false, true , true , true , true , true , false, true , true , true , true , false, true , false, true , true , true , true , true , false, true , true , true , true },
+            {false, false, false, false, false, false, false, true , false, false, false, false, true , false, false, false, true , false, false, false, true , false, false, false},
     };
 
     @Override
@@ -165,15 +168,15 @@ public class Main extends Application {
 
         Group userInterface = new Group();
 
-        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), new Object(new Point(10,10))));
+        mazes.add(new Maze(mazeOne, woodTilePath, grassTilePath, new Point(0,0), new Point(23,0), generateMapOneMinotaurs(), generateMapOneSwords()));
         mazes.add(new Maze(mazeTwo, stoneBrickPath, generateCaveBlocks(), new Point(0,0), new Point(21,13), generateMapTwoMinotaurs(), generateMapTwoSwords()));
-        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(0,0), new Point(23,0), generateMapThreeMinotaurs(), new Object(new Point(15,10))));
-        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), new Object(new Point(15,10))));
+        mazes.add(new Maze(mazeThree, netherrackBlockPath, netherBrickPath, new Point(11,7), new Point(22,0), generateMapThreeMinotaurs(), generateMapThreeSwords()));
+        mazes.add(new Maze(mazeFour, endstonePath, obsidianPath, new Point(0,0), new Point(23,0), generateMapFourMinotaurs(), generateMapFourSwords()));
 
         final Maze[] maze = {mazes.get(0)};
         maze[0].generateMaze(root);
 
-        player = new PlayerModel(playerTilePath);
+        player = new PlayerModel();
         player.generateModel(root, maze[0].getPlayerSpawnX(),maze[0].getPlayerSpawnY());
 
         maze[0].bringMobsForward();
@@ -228,18 +231,26 @@ public class Main extends Application {
 
             if (key.getCode() == KeyCode.W) {
                 player.moveUp(maze[0]);
-            }
-
-            if (key.getCode() == KeyCode.A) {
+                playerInputs.add("W");
+            } else if (key.getCode() == KeyCode.A) {
                 player.moveLeft(maze[0]);
-            }
-
-            if (key.getCode() == KeyCode.S) {
+                playerInputs.add("A");
+            } else if (key.getCode() == KeyCode.S) {
                 player.moveDown(maze[0]);
+                playerInputs.add("S");
+            } else if (key.getCode() == KeyCode.D) {
+                player.moveRight(maze[0]);
+                playerInputs.add("D");
+            } else if (key.getCode() == KeyCode.B) {
+                playerInputs.add("B");
+            } else if (key.getCode() == KeyCode.ENTER) {
+                playerInputs.add("ENTER");
+            } else {
+                playerInputs.clear();
             }
 
-            if (key.getCode() == KeyCode.D) {
-                player.moveRight(maze[0]);
+            if (playerInputs.equals(konamiCode())) {
+                player.setImage(root, new Image(ricoTilePath));
             }
 
             if ((player.getX() == maze[0].getEndX() && player.getY() == maze[0].getEndY()) || key.getCode() == KeyCode.L) {
@@ -254,6 +265,9 @@ public class Main extends Application {
                     maze[0].respawnMobs(root);
 
                     animationTimer.start();
+                } else {
+                    stage.close();
+                    //END THE GAME
                 }
             }
 
@@ -319,6 +333,11 @@ public class Main extends Application {
 
         return mobs;
     }
+    public ArrayList<Object> generateMapOneSwords() {
+        ArrayList<Object> swords = new ArrayList<Object>();
+        swords.add(new Object(new Point(10,10)));
+        return swords;
+    }
 
     public ArrayList<Mob> generateMapTwoMinotaurs() {
         ArrayList<Mob> mobs = new ArrayList<Mob>();
@@ -327,7 +346,6 @@ public class Main extends Application {
         mobs.add(new Mob(new Point(20,10), spiderTilePath));
         return mobs;
     }
-
     public ArrayList<Object> generateMapTwoSwords() {
         ArrayList<Object> swords = new ArrayList<Object>();
         swords.add(new Object(new Point(17, 10)));
@@ -338,16 +356,30 @@ public class Main extends Application {
 
     public ArrayList<Mob> generateMapThreeMinotaurs() {
         ArrayList<Mob> mobs = new ArrayList<Mob>();
-        mobs.add(new Mob(new Point(10,10), blazeTilePath));
-        mobs.add(new Mob(new Point(5,10), blazeTilePath));
-        mobs.add(new Mob(new Point(20,10), blazeTilePath));
+        mobs.add(new Mob(new Point(5,2), blazeTilePath));
+        mobs.add(new Mob(new Point(21,3), blazeTilePath));
+        mobs.add(new Mob(new Point(17,11), blazeTilePath));
+        mobs.add(new Mob(new Point(5,13), blazeTilePath));
         return mobs;
+    }
+    public ArrayList<Object> generateMapThreeSwords() {
+        ArrayList<Object> swords = new ArrayList<Object>();
+        swords.add(new Object(new Point(7,7)));
+        swords.add(new Object(new Point(19,7)));
+        swords.add(new Object(new Point(20,11)));
+        swords.add(new Object(new Point(5,14)));
+        return swords;
+
     }
 
     public ArrayList<Mob> generateMapFourMinotaurs() {
         ArrayList<Mob> mobs = new ArrayList<Mob>();
-        mobs.add(new Mob(new Point(10,10), endermanTilePath));
+//        mobs.add(new Mob(new Point(10,10), endermanTilePath));
         return mobs;
+    }
+    public ArrayList<Object> generateMapFourSwords() {
+        ArrayList<Object> swords = new ArrayList<Object>();
+        return swords;
     }
 
     public ArrayList<String> generateCaveBlocks() {
@@ -368,6 +400,22 @@ public class Main extends Application {
 
 
         return caveBlocks;
+    }
+
+    public ArrayList<String> konamiCode() {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("W");
+        arrayList.add("W");
+        arrayList.add("S");
+        arrayList.add("S");
+        arrayList.add("A");
+        arrayList.add("D");
+        arrayList.add("A");
+        arrayList.add("D");
+        arrayList.add("B");
+        arrayList.add("A");
+        arrayList.add("ENTER");
+        return arrayList;
     }
 
     public static void main(String[] args) {

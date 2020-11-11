@@ -9,7 +9,7 @@ import static com.company.Main.width;
 import static com.company.Main.height;
 
 public class Character {
-    private final ImageView image;
+    private ImageView image;
 
     private int x;
     private int y;
@@ -21,7 +21,18 @@ public class Character {
     public void setY(int y) { this.y = y; }
 
     public int getSteps() { return steps; }
+
     public ImageView getImage() { return image; }
+    public void setImage(Pane pane, Image image) {
+
+        this.image.toBack();
+        pane.getChildren().remove(image);
+
+        this.image = new ImageView(image);
+        generateModel(pane,this.x,this.y);
+
+        this.image.toFront();
+    }
 
     public Character(String imagePath) {
         Image temp = new Image(imagePath);
