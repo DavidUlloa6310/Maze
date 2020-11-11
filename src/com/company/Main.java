@@ -263,11 +263,12 @@ public class Main extends Application {
                     maze[0].generateMaze(root);
 
                     player.respawn(maze[0].getPlayerSpawnX(), maze[0].getPlayerSpawnY());
-                    maze[0].respawnMobs(root);
+                    maze[0].respawnMobs();
 
                     animationTimer.start();
                 } else {
                     stage.close();
+                    JOP.msg("You've Won!\nThrough the game, you walked " + player.getSteps() + " blocks");
                     //END GAME
                 }
             }
@@ -441,6 +442,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        JOP.msg("Welcome to the Minecraft Maze!\nThe maze consists of different mobs (creppers, spiders, blazes and enderman) that you have to avoid or kill.\nYou can kill enemies by collecting a sword. The swords do not stack, but do carry over each level.\nTo advance each level, get to the golden block.");
         launch(args);
     }
 }

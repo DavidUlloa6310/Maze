@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.Point;
 import javafx.scene.image.ImageView;
 
 public class Object {
@@ -9,7 +8,6 @@ public class Object {
     private boolean isGone;
 
     public Point getPoint() { return point; }
-    public void setPoint(Point point) { this.point = point; }
 
     public ImageView getImageView() { return imageView; }
     public void setImageView(ImageView imageView) { this.imageView = imageView; }

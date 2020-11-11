@@ -1,6 +1,5 @@
 package com.company;
 
-import javafx.scene.paint.Color;
 import static com.company.Main.playerTilePath;
 
 public class PlayerModel extends Character {

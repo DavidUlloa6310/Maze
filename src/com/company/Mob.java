@@ -70,6 +70,7 @@ public class Mob extends Character {
                     return true;
                 } else {
                     stage.close();
+                    JOP.msg("You've Lost!\nThrough the game, you walked " + player.getSteps() + " blocks");
                 }
             }
         }

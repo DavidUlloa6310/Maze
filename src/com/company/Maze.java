@@ -14,19 +14,18 @@ import static com.company.Main.tileSize;
 import static com.company.Main.teleporterBlockPath;
 
 public class Maze {
-    private boolean[][] maze;
+    private final boolean[][] maze;
     Random random;
 
-    private int playerSpawnX, playerSpawnY;
+    private final int playerSpawnX, playerSpawnY;
 
-    private int endX, endY;
-    private ArrayList<Mob> mobs;
+    private final int endX, endY;
+    private final ArrayList<Mob> mobs;
 
-    private ArrayList<Object> swords;
-    private ImageView swordView;
+    private final ArrayList<Object> swords;
 
-    private ArrayList<String> blockedTiles;
-    private String walkableTiles;
+    private final ArrayList<String> blockedTiles;
+    private final String walkableTiles;
 
     private ArrayList<Teleporter> teleporters;
 
@@ -43,10 +42,6 @@ public class Maze {
     public ArrayList<Mob> getMobs() { return mobs; }
     public ArrayList<Object> getObjects() { return this.swords; }
     public ArrayList<Teleporter> getTeleporters() { return this.teleporters; }
-
-    public void setMaze(boolean[][] maze) {
-        this.maze = maze;
-    }
 
     public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords) {
         this.maze = maze;
@@ -70,18 +65,13 @@ public class Maze {
         this.teleporters = new ArrayList<>();
     }
 
-    public Maze(boolean[][] maze, String walkableTiles, ArrayList<String> blockedTiles, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords, ArrayList<Teleporter> teleporters) {
-        this(maze, walkableTiles, blockedTiles, playerSpawn, end, mobs, swords);
-        this.teleporters = teleporters;
-    }
-
     public Maze(boolean[][] maze, String walkableTiles, String blockedTile, Point playerSpawn, Point end, ArrayList<Mob> mobs, ArrayList<Object> swords, ArrayList<Teleporter> teleporters) {
         this(maze, walkableTiles, blockedTileToArrayList(blockedTile), playerSpawn, end, mobs, swords);
         this.teleporters = teleporters;
     }
 
     public static ArrayList<String> blockedTileToArrayList(String blockedTile) {
-        ArrayList<String> blockedTiles = new ArrayList<String>();
+        ArrayList<String> blockedTiles = new ArrayList<>();
         blockedTiles.add(blockedTile);
         return blockedTiles;
     }
@@ -118,7 +108,7 @@ public class Maze {
 
         for (Object sword : swords) {
             Image swordImg = new Image(swordPath);
-            swordView = new ImageView();
+            ImageView swordView = new ImageView();
             swordView.setImage(swordImg);
             swordView.relocate(sword.getPoint().getX() * tileSize, sword.getPoint().getY() * tileSize);
             sword.setImageView(swordView);
@@ -154,7 +144,7 @@ public class Maze {
         sword.setGone(true);
     }
 
-    public void respawnMobs(Pane root) {
+    public void respawnMobs() {
         for (Mob mob : mobs) {
             mob.respawn(mob.getSpawnX(), mob.getSpawnY());
         }
