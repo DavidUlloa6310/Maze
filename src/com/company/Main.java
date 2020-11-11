@@ -62,10 +62,10 @@ public class Main extends Application {
     public static final String obsidianPath = "images/blocks/obsidian.png";
     public static final String teleporterBlockPath = "images/blocks/portalBlock.png";
 
-    public static final String musicPath = "src/media/music.mp3";
-    public static final String deathSoundPath = "src/media/deathSound.mp3";
+    public static final String musicPath = "sr/media/music.mp3";
+    public static final String deathSoundPath = "src/media/music.mp3";
 
-    public MediaPlayer songMediaPlayer = new MediaPlayer(new Media(new File(musicPath).toURI().toString()));
+    ///public MediaPlayer songMediaPlayer = new MediaPlayer(new Media(new File(musicPath).toURI().toString()));
 
     public AtomicInteger level;
 
@@ -195,9 +195,9 @@ public class Main extends Application {
                             lastTick = now;
                             mob.move(player, maze[0]);
                             if (mob.checkDamage(stage, player)) {
-                                Media media = new Media(new File(deathSoundPath).toURI().toString());
-                                MediaPlayer deathPlayer = new MediaPlayer(media);
-                                deathPlayer.setAutoPlay(true);
+//                                Media media = new Media(new File(deathSoundPath).toURI().toString());
+//                                MediaPlayer deathPlayer = new MediaPlayer(media);
+//                                deathPlayer.setAutoPlay(true);
                             }
                             updatePlayerUI(userInterface, player);
                             //return; maybe don;t need?
@@ -212,9 +212,9 @@ public class Main extends Application {
                         if (!mob.isDead()) {
                             mob.move(player, maze[0]);
                             if (mob.checkDamage(stage, player)) {
-                                Media media = new Media(new File(deathSoundPath).toURI().toString());
-                                MediaPlayer deathPlayer = new MediaPlayer(media);
-                                deathPlayer.setAutoPlay(true);
+//                                Media media = new Media(new File(deathSoundPath).toURI().toString());
+//                                MediaPlayer deathPlayer = new MediaPlayer(media);
+//                                deathPlayer.setAutoPlay(true);
                             }
                             updatePlayerUI(userInterface, player);
                         }
@@ -276,9 +276,9 @@ public class Main extends Application {
             for (Mob mob : maze[0].getMobs()) {
 
                 if (!mob.isDead() && mob.checkDamage(stage, player)) {
-                    Media media = new Media(new File(deathSoundPath).toURI().toString());
-                    MediaPlayer deathPlayer = new MediaPlayer(media);
-                    deathPlayer.setAutoPlay(true);
+//                    Media media = new Media(new File(deathSoundPath).toURI().toString());
+//                    MediaPlayer deathPlayer = new MediaPlayer(media);
+//                    deathPlayer.setAutoPlay(true);
                 }
                 updatePlayerUI(userInterface, player);
             }
@@ -301,7 +301,7 @@ public class Main extends Application {
 
         });
 
-        songMediaPlayer.setAutoPlay(true);
+        //songMediaPlayer.setAutoPlay(true);
 
         root.getChildren().add(userInterface);
 
@@ -365,7 +365,7 @@ public class Main extends Application {
 
     public ArrayList<Mob> generateMapThreeMinotaurs() {
         ArrayList<Mob> mobs = new ArrayList<Mob>();
-        mobs.add(new Mob(new Point(5,2), blazeTilePath));
+        //mobs.add(new Mob(new Point(3,2), blazeTilePath));
         mobs.add(new Mob(new Point(21,3), blazeTilePath));
         mobs.add(new Mob(new Point(17,11), blazeTilePath));
         mobs.add(new Mob(new Point(5,13), blazeTilePath));
@@ -442,7 +442,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        JOP.msg("Welcome to the Minecraft Maze!\nThe maze consists of different mobs (creppers, spiders, blazes and enderman) that you have to avoid or kill.\nYou can kill enemies by collecting a sword. The swords do not stack, but do carry over each level.\nTo advance each level, get to the golden block.");
+        JOP.msg("Welcome to the Minecraft Maze!\nThe maze consists of different mobs (creppers, spiders, blazes and enderman) that you have to avoid or kill.\nYou can kill enemies by collecting a sword. The swords do not stack, but do carry over each level.\nTo advance each level, get to the golden block.\nIf you need to skip a level, just take the L, and click L.");
         launch(args);
     }
 }
