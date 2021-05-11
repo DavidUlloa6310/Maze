@@ -9,6 +9,9 @@ import static com.company.Main.width;
 import static com.company.Main.height;
 
 public class Character {
+    /*
+    Represents any character which can be used, either the minotaur or player.
+     */
     private ImageView image;
 
     private int x;

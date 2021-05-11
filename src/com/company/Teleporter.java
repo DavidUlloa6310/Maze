@@ -1,6 +1,9 @@
 package com.company;
 
 public class Teleporter {
+    /*
+    Represents the Teleporter block.
+     */
     private final Point startPoint;
     private final Point teleportPoint;
 

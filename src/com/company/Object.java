@@ -3,6 +3,9 @@ package com.company;
 import javafx.scene.image.ImageView;
 
 public class Object {
+    /*
+    Represents any in game object (item).
+     */
     private Point point;
     private ImageView imageView;
     private boolean isGone;

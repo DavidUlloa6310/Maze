@@ -1,6 +1,9 @@
 package com.company;
 
 public class Point {
+    /*
+    Represents any point (2d Vector) in the game.
+     */
     private int x;
     private int y;
 

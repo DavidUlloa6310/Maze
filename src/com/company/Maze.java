@@ -14,6 +14,9 @@ import static com.company.Main.tileSize;
 import static com.company.Main.teleporterBlockPath;
 
 public class Maze {
+    /*
+    Represents the maze with a 2d boolean array.
+     */
     private final boolean[][] maze;
     Random random;
 

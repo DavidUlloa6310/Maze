@@ -3,6 +3,9 @@ package com.company;
 import static com.company.Main.playerTilePath;
 
 public class PlayerModel extends Character {
+    /*
+    Represents the player.
+     */
 
     private boolean hasSword = false;
     private int health;

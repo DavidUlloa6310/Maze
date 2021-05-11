@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Application {
+    /*
+    This was my first JavaFX game and I'm not proud of this main class.
+    But it just pretty much runs the whole game loop.
+     */
 
     public static final int width = 24;
     public static final int height = 16;

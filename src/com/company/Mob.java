@@ -7,6 +7,9 @@ import static com.company.Main.creeperTilePath;
 import static com.company.Main.tileSize;
 
 public class Mob extends Character {
+    /*
+    The minotaur in essence, but can be shown as any mob.
+     */
 
     private final int spawnX;
     private final int spawnY;
